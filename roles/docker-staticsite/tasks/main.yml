@@ -1,0 +1,22 @@
+---
+- name: Log into private registry and force re-authorization
+  docker_login:
+    registry: "{{ docker_staticsite_registry }}"
+    username: "{{ docker_staticsite_access }}"
+    password: "{{ docker_staticsite_secret }}"
+    reauthorize: yes
+
+#- name: Log into private registry
+#  shell: "docker login -u {{ docker_staticsite_access }} -p {{ docker_staticsite_secret }} {{ docker_staticsite_registry }}"
+
+- name: Run docker staticsite container
+  docker_container:
+    exposed_ports:
+      - 80
+    image: "{{ docker_staticsite_registry }}/hmj/staticsite:latest"
+    name: staticsite
+    published_ports:
+      - "{{ docker_staticsite_expose_port }}:80"
+    pull: yes
+    restart_policy: unless-stopped
+    state: started

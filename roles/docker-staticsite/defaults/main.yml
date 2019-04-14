@@ -1,0 +1,16 @@
+---
+# Directory for storing pushed images on registry host.
+docker_minio_data_directory: /opt/minio/data
+
+# Directory for storing pushed images on registry host.
+docker_minio_config_directory: /opt/minio/config
+
+# Port to expose to host machine, for use in reverse proxy.
+docker_minio_expose_port: 127.0.0.1:9000
+
+#key ovreide these
+
+docker_staticsite_registry: registry.hmzoo.org:443
+docker_staticsite_access: user
+docker_staticsite_secret: password
+docker_staticsite_expose_port : 4080

@@ -1,0 +1,6 @@
+---
+- hosts: dostage
+  become: yes
+
+  roles:
+    - nodejs

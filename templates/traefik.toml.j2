@@ -1,0 +1,55 @@
+logLevel = "INFO"
+
+[traefikLog]
+  filePath = "/var/log/traefik.log"
+  format   = "json"
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+    entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
+  [entryPoints.traefik]
+  address = ":{{ traefik_http_port }}"
+[api]
+ dashboard = true
+ entryPoint = "traefik"
+
+[acme]
+email = "{{ acme_email }}"
+storage = "/opt/traefik/acme.json"
+onHostRule = true
+caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+#caServer = "https://acme-v02.api.letsencrypt.org/directory"
+
+entryPoint = "https"
+ [acme.dnsChallenge]
+  provider = "digitalocean"
+  delayBeforeCheck = 0
+
+[[acme.domains]]
+  main = "*.{{ main_domain }}"
+
+[docker]
+endpoint = "unix:///var/run/docker.sock"
+domain = "localhost"
+watch = true
+
+[file]
+
+[backends]
+  [backends.traefik-ui]
+     [backends.traefik-ui.servers.server1]
+        url = "http://localhost:{{ traefik_http_port }}"
+
+[frontends]
+  [frontends.traefik-ui]
+  entryPoints = ["http","https"]
+  backend = "traefik-ui"
+  basicAuth = ["{{ traefik_basicauth }}"]
+  passHostHeader = true
+    [frontends.traefik-ui.routes.server1]
+    rule = "Host: traefik.{{ main_domain }}"

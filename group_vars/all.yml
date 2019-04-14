@@ -1,0 +1,47 @@
+
+# subnets
+#public_subnet: "10.18.0.0/24"
+private_subnet: "10.135.0.0/16"
+
+#firewall
+firewall_allowed_tcp_ports:
+  - "22"
+  - "80"
+  - "443"
+
+# traefik vars
+traefik_install_dir: /usr/bin
+traefik_binary_url: https://github.com/containous/traefik/releases/download/v1.7.6/traefik_linux-amd64
+traefik_bin_path: "{{ traefik_install_dir }}/traefik"
+traefik_config_file: /etc/traefik.toml
+acme_email: "hmj@goatpage.com"
+main_domain: "hmzoo.net"
+do_auth_token: "{{ lookup('env','DO_AUTH_TOKEN') }}"
+traefik_template: "{{ playbook_dir }}/templates/traefik.toml"
+traefik_systemd_unit_template: "{{ playbook_dir }}/templates/traefik.service"
+traefik_systemd_unit_dest: /etc/systemd/system/traefik.service
+traefik_http_port: 2020
+traefik_basicauth: "{{ lookup('env','BASIC_AUTH') }}"
+
+
+#pip modules
+pip_package: python3-pip
+pip_install_packages:
+  - name: docker
+  - name: docker-compose
+
+
+#NODEJS
+nodejs_npm_global_packages:
+  - name: gatsby
+
+#MINIO
+docker_minio_access_key: "{{ lookup('env','MINIO_ACCESS_KEY') }}"
+docker_minio_secret_key: "{{ lookup('env','MINIO_SECRET_KEY') }}"
+
+#staticsite
+
+docker_staticsite_registry: registry.hmzoo.org:443
+docker_staticsite_access: "{{ lookup('env','REGISTRY_ACCESS') }}"
+docker_staticsite_secret: "{{ lookup('env','REGISTRY_SECRET') }}"
+docker_staticsite_expose_port : 4080

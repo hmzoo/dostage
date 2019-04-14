@@ -1,0 +1,11 @@
+---
+# Directory for storing mongodb data.
+docker_mongodb_data_directory: /opt/mongodb/data
+
+# Directory for storing strapi data.
+docker_strapi_data_directory: /opt/strapi/data
+
+
+
+# Port to expose
+docker_minio_expose_port: 127.0.0.1:9000

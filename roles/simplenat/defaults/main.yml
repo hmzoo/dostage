@@ -1,0 +1,4 @@
+---
+# defaults file for common
+
+private_subnet: "10.18.1.0/24"

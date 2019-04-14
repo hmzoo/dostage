@@ -1,0 +1,5 @@
+
+[public]
+dostage ansible_host=hmzoo.net ansible_port=22 ansible_user=root
+[public:vars]
+ansible_python_interpreter=/usr/bin/python3

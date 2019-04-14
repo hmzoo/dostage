@@ -1,0 +1,16 @@
+---
+# tasks file for common
+
+- name : copy simplenat init.d script
+  template:
+    src: simplenat.j2
+    dest: /etc/init.d/simplenat
+    owner: root
+    group: root
+    mode: 0755
+
+- name : make simplenat start at boot
+  command:  update-rc.d simplenat defaults
+
+- name : start simplenat
+  service : name=simplenat state=started 

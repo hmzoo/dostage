@@ -1,0 +1,45 @@
+---
+- name: fail2ban
+  src: robertdebock.fail2ban
+
+- name: firewall
+  src: geerlingguy.firewall
+
+- name: git
+  src: geerlingguy.git
+
+- name: gogs
+  src: geerlingguy.gogs
+
+- name: traefik
+  src: kibatic.traefik
+
+- name: pip
+  src: geerlingguy.pip
+
+- name: docker
+  src: geerlingguy.docker
+
+- name: golang
+  src: andrewrothstein.go
+
+- name: nodejs
+  src: geerlingguy.nodejs
+
+- name: java
+  src: geerlingguy.java
+
+- name: jenkins
+  src: geerlingguy.jenkins
+
+- name: htpasswd
+  src: geerlingguy.htpasswd
+
+- name: nginx
+  src: geerlingguy.nginx
+
+- name: gocd_server
+  src: sansible.gocd_server
+
+- name: gocd_agent
+  src: sansible.gocd_agent

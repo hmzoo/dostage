@@ -1,0 +1,29 @@
+---
+- hosts: dostage
+  become: yes
+  pre_tasks:
+    - name: Update and upgrade apt packages
+      become: true
+      apt:
+        upgrade: yes
+        update_cache: yes
+        cache_valid_time: 86400 #One day
+    - name: Prepare opt directory for traefik
+      become: true
+      file:
+        path: /opt/traefik
+        state: directory
+
+  
+
+
+  roles:
+    - common
+    - firewall
+    - fail2ban
+    - pip
+    - docker
+    - htpasswd
+    - traefik
+    - nodejs
+    - golang

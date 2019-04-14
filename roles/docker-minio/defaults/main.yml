@@ -1,0 +1,14 @@
+---
+# Directory for storing pushed images on registry host.
+docker_minio_data_directory: /opt/minio/data
+
+# Directory for storing pushed images on registry host.
+docker_minio_config_directory: /opt/minio/config
+
+# Port to expose to host machine, for use in reverse proxy.
+docker_minio_expose_port: 127.0.0.1:9000
+
+#key ovreide these
+
+docker_minio_access_key: AKIAIOSFODNN7EXAMPLE
+docker_minio_secret_key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY

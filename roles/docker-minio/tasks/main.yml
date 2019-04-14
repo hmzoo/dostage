@@ -1,0 +1,32 @@
+---
+- name: Create Docker minio data dir.
+  file:
+    state: directory
+    path: "{{ docker_minio_data_directory }}"
+    mode: "0755"
+
+- name: Create Docker minio config dir.
+  file:
+    state: directory
+    path: "{{ docker_minio_config_directory }}"
+    mode: "0755"
+
+- name: Run docker minio container
+  docker_container:
+    exposed_ports:
+      - 9000
+    image: "minio/minio"
+    name: minio
+    published_ports:
+      - "{{ docker_minio_expose_port }}:9000"
+    volumes:
+      - "{{ docker_minio_data_directory }}:/data"
+      - "{{ docker_minio_config_directory }}:/root/.minio"
+    pull: no
+    restart_policy: unless-stopped
+    # "reloaded" does not appear to be idempotent
+    state: started
+    env:
+      MINIO_ACCESS_KEY: "{{ docker_minio_access_key }}"
+      MINIO_SECRET_KEY: "{{ docker_minio_secret_key }}"
+    command: "server /data"

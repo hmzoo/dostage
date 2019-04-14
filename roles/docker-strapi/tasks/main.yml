@@ -1,0 +1,46 @@
+---
+- name: Create Docker mongodb data dir.
+  file:
+    state: directory
+    path: "{{ docker_mongodb_data_directory }}"
+    mode: "0755"
+
+- name: Create Docker strapi data dir.
+  file:
+    state: directory
+    path: "{{ docker_strapi_data_directory }}"
+    mode: "0755"
+
+
+
+- name: Run docker mongodb container
+  docker_container:
+    image: "mongo"
+    name: "mongodb"
+    volumes:
+      - "{{ docker_mongodb_data_directory }}:/data/db"
+    pull: no
+    restart_policy: unless-stopped
+    # "reloaded" does not appear to be idempotent
+    state: started
+
+- name: Run docker strapi container
+  docker_container:
+    exposed_ports:
+      - 1337
+    image: "strapi/strapi"
+    name: "strapi"
+    published_ports:
+      - "1337:1337"
+    volumes:
+      - "{{ docker_strapi_data_directory }}:/usr/src/api/strapi-app"
+    links:
+      - "mongodb"
+    pull: no
+    restart_policy: unless-stopped
+    state: started
+    env:
+      DATABASE_CLIENT: "mongo"
+      DATABASE_HOST: "mongodb"
+      DATABASE_PORT: 27017
+      DATABASE_NAME: strapi

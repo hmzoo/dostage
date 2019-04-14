@@ -1,0 +1,17 @@
+---
+# tasks file for common
+
+- name: "set timezone to {{ timezone }}"
+  timezone:
+    name: "{{ timezone }}"
+
+- name: install packages
+  package:
+    name:
+      - locales
+      - ntp
+      - vim
+      - git
+      - curl
+
+    state: latest
